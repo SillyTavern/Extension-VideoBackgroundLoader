@@ -1,7 +1,29 @@
-import './style.css';
-import message from './index.html';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { Popup } = (globalThis as any).SillyTavern.getContext();
+export async function convertVideoToAnimatedWebp({ name, buffer }: ConvertVideoArgs): Promise<Uint8Array> {
+    const ffmpeg = new FFmpeg();
+    await ffmpeg.load({
+        coreURL: './ffmpeg-core.js',
+        wasmURL: './ffmpeg-core.wasm',
+    });
+    await ffmpeg.writeFile(name, buffer);
+    await ffmpeg.exec([
+        '-i',
+        name,
+        '-vcodec',
+        'libwebp',
+        '-lossless',
+        '0',
+        '-loop',
+        '0',
+        '-preset',
+        'picture',
+        '-an',
+        '-vsync',
+        '0',
+        'output.webp',
+    ]);
+    return await ffmpeg.readFile('output.webp') as Uint8Array;
+}
 
-Popup.show.text(message);
+globalThis.convertVideoToAnimatedWebp = convertVideoToAnimatedWebp;

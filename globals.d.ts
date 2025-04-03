@@ -1,4 +1,4 @@
-export {};
+export { };
 
 // 1. Import when extension is user-scoped
 import '../../../../public/global';
@@ -6,5 +6,10 @@ import '../../../../public/global';
 import '../../../../global';
 
 declare global {
-    // Add global type declarations here
+    interface ConvertVideoArgs {
+        buffer: Uint8Array;
+        name: string;
+    }
+
+    function convertVideoToAnimatedWebp(args: ConvertVideoArgs): Promise<Uint8Array>;
 }

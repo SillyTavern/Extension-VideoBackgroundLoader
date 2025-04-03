@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "globals": "^16.0.0",
     "html-loader": "^5.1.0",
@@ -17,5 +18,10 @@
     "ts-loader": "^9.5.1",
     "typescript-eslint": "^8.29.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "url-join": "^5.0.0"
   }
 }

@@ -1,9 +1,11 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import TerserPlugin from 'terser-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const __dirname = import.meta.dirname ?? path.dirname(fileURLToPath(import.meta.url));
 
+/** @type {import('webpack').Configuration} */
 export default {
     entry: path.join(__dirname, 'src/index.ts'),
     output: {
@@ -13,6 +15,14 @@ export default {
     resolve: {
         extensions: ['.ts', '.js'],
     },
+    plugins: [
+        new CopyPlugin({
+            patterns: [{
+                from: path.join(__dirname, 'node_modules/@ffmpeg/core/dist/umd'),
+                to: path.join(__dirname, 'dist/'),
+            }],
+        }),
+    ],
     module: {
         rules: [
             {
